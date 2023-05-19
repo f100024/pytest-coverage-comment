@@ -17873,7 +17873,7 @@ const main = async () => {
     options.commit = payload.pull_request.head.sha;
     options.head = payload.pull_request.head.ref;
     options.base = payload.pull_request.base.ref;
-  } else if (eventName === 'push') {
+  } else if (eventName === 'push' || eventName === 'workflow_dispatch') {
     options.commit = payload.after;
     options.head = context.ref;
   }
@@ -17976,7 +17976,7 @@ const main = async () => {
 
   const issue_number = payload.pull_request ? payload.pull_request.number : 0;
 
-  if (eventName === 'push') {
+  if (eventName === 'push' || eventName === 'workflow_dispatch') {
     core.info('Create commit comment');
     await octokit.repos.createCommitComment({
       repo,
